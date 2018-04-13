@@ -8,13 +8,17 @@ import fileinput
 import os
 import sys
 
+if os.name == 'nt':
+    sep = "\\"
+else:
+    sep = "/"
 
 j = 0
 for dof in [x for x in os.walk(sys.argv[1])]:
     i = 0
     for filename in dof[2]:
         if filename[-5:] == ".html":
-            FilePath = str(dof[0]) + "\\" + str(filename)
+            FilePath = str(dof[0]) + sep + str(filename)
             if "HTTrack" in str(open(FilePath, "r").read()):
                 with fileinput.FileInput(FilePath, inplace=True, backup='.bak') as file:
                     finalContent = ""
